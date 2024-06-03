@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "core",
     "auth_account",
-    "course_management"
+    "course_management",
+    "chat",
 ]
 
 MIDDLEWARE = [

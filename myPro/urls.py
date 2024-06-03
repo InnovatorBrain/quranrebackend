@@ -30,6 +30,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("auth/", include("auth_account.urls")),
     path("course/", include("course_management.urls")),
+    path("chat/", include("chat.urls")),
 ]
 
 if settings.DEBUG:
