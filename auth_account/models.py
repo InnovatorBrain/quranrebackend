@@ -77,7 +77,7 @@ class StudentProfile(models.Model):
     teacher = models.ForeignKey('TeacherProfile', on_delete=models.SET_NULL, null=True, blank=True, related_name='students')
     grade = models.CharField(max_length=10, null=True, blank=True)
     parent_contact = models.CharField(max_length=15, blank=True)
-    enrollment_status = models.BooleanField(default=False)  # Add this line
+    enrollment_status = models.BooleanField(default=False)  
 
     def __str__(self):
         return f"{self.user.email} StudentProfile"
@@ -92,7 +92,6 @@ class TeacherProfile(models.Model):
     def __str__(self):
         return f"{self.user.email} TeacherProfile"
 
-# Signal handlers
 @receiver(post_save, sender=CustomUser)
 def create_profile(sender, instance, created, **kwargs):
     if created:

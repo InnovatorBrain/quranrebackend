@@ -4,14 +4,14 @@ from django.contrib.auth.models import Group
 from .models import CustomUser, ProfilePicture, StudentProfile, TeacherProfile
 
 class CustomUserAdmin(BaseUserAdmin):
-    list_display = ["id", "email", "first_name", "last_name", "is_admin"]
-    list_filter = ["is_admin"]
+    list_display = ["id", "email", "first_name", "last_name", "is_admin", "is_student", "is_teacher", ]
+    list_filter = ["is_admin", "is_student", "is_teacher"]  # Add filter for is_student and is_teacher
     list_editable = ["is_admin"]
     list_per_page = 10
     fieldsets = [
-        ("CropShield User's Credentials", {"fields": ["email", "password"]}),
+        ("Quran Reasonate User's Credentials", {"fields": ["email", "password"]}),
         ("Personal Info", {"fields": ["first_name", "last_name"]}),
-        ("Permissions", {"fields": ["is_admin"]}),
+        ("Permissions", {"fields": ["is_admin", "is_student", "is_teacher"]}),  # Add fields to permissions
     ]
     add_fieldsets = [
         (
@@ -24,6 +24,8 @@ class CustomUserAdmin(BaseUserAdmin):
                     "last_name",
                     "password1",
                     "password2",
+                    "is_student",  # Add is_student field to the add form
+                    "is_teacher",  # Add is_teacher field to the add form
                 ],
             },
         ),
@@ -38,7 +40,7 @@ class ProfilePictureAdmin(admin.ModelAdmin):
     search_fields = ["custom_user__email"]
 
 class StudentProfileAdmin(admin.ModelAdmin):
-    list_display = ["id", "user_email", "user_first_name", "user_last_name"]
+    list_display = ["id", "user_email", "user_first_name", "user_last_name", "enrolled_date", "parent_contact"]
     list_per_page = 10
     search_fields = ["user__email"]
 
@@ -55,7 +57,7 @@ class StudentProfileAdmin(admin.ModelAdmin):
     user_last_name.short_description = "Last Name"
 
 class TeacherProfileAdmin(admin.ModelAdmin):
-    list_display = ["id", "user_email", "user_first_name", "user_last_name"]
+    list_display = ["id", "user_email", "user_first_name", "user_last_name", "subject", "experience", "qualifications"]
     list_per_page = 10
     search_fields = ["user__email"]
 
