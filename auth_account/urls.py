@@ -17,7 +17,9 @@ from .views import (
     TeacherAddStudentView,   
     TeacherRemoveStudentView,
     TeacherStudentsListView,
-    AutoEnrollStudentView
+    AutoEnrollStudentView,
+    UploadLectureView,
+    LectureListView
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -40,8 +42,10 @@ urlpatterns = [
     path("teacher/add-student/", TeacherAddStudentView.as_view(), name="teacher_add_student"),
     path("teacher/remove-student/", TeacherRemoveStudentView.as_view(), name="teacher_remove_student"),
     path("teacher/students/", TeacherStudentsListView.as_view(), name="teacher_students_list"),
-    path("student/enroll/teacher/<int:teacher_id>/", AutoEnrollStudentView.as_view(), name="auto_enroll_student")
-]
+    path("student/enroll/teacher/<int:teacher_id>/", AutoEnrollStudentView.as_view(), name="auto_enroll_student"),
+    path('upload-lecture/', UploadLectureView.as_view(), name='upload_lecture'),
+    path('lectures/', LectureListView.as_view(), name='lecture_list'),
+  ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

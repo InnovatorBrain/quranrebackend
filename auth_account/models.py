@@ -106,3 +106,10 @@ def save_profile(sender, instance, **kwargs):
         instance.student_profile.save()
     if instance.is_teacher:
         instance.teacher_profile.save()
+
+
+
+class Lecture(models.Model):
+    title = models.CharField(max_length=100)
+    start_time = models.DateTimeField()
+    expiry_time = models.DateTimeField()

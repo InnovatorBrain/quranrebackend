@@ -21,8 +21,8 @@ from django.conf import settings
 """
    Admin Interface
 """
-admin.site.site_header = "Islamic Admin"
-admin.site.index_title = "Islamic Site Administration"
+admin.site.site_header = "Quran reasonate Admin"
+admin.site.index_title = "Quran reasonate Site Administration"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -31,6 +31,7 @@ urlpatterns = [
     path("auth/", include("auth_account.urls")),
     path("course/", include("course_management.urls")),
     path("chat/", include("chat.urls")),
+    
 ]
 
 if settings.DEBUG:

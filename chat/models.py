@@ -1,21 +1,40 @@
-# chat/models.py
 from django.db import models
-from django.conf import settings
-from auth_account.models import StudentProfile, TeacherProfile
+from auth_account.models import CustomUser as User  
 
-class ChatRoom(models.Model):
-    teacher = models.ForeignKey(TeacherProfile, on_delete=models.CASCADE, related_name='chat_rooms')
-    students = models.ManyToManyField(StudentProfile, related_name='chat_rooms')
-    created_at = models.DateTimeField(auto_now_add=True)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
 
-    def __str__(self):
-        return f"ChatRoom with {self.teacher.user.email}"
-
-class Message(models.Model):
-    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name='messages')
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+class Todo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=1000)
+    completed = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Message from {self.sender.email} in {self.chat_room.id}"
+        return self.title[:30]
+
+class ChatMessage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="user")
+    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="sender")
+    receiver = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="receiver")  
+    message = models.CharField(max_length=10000000000)
+    is_read = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['date']
+        verbose_name_plural = "Messages"
+
+    def __str__(self):
+        return f"{self.sender} - {self.receiver}"  
+
+    @property
+    def sender_profile(self):
+        sender_profile = Profile.objects.get(user=self.sender)
+        return sender_profile
+
+    @property
+    def receiver_profile(self):
+        receiver_profile = Profile.objects.get(user=self.receiver)
+        return receiver_profile

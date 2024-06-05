@@ -6,7 +6,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from .models import CustomUser as User, ProfilePicture, StudentProfile, TeacherProfile
+from .models import CustomUser as User, ProfilePicture, StudentProfile, TeacherProfile, Lecture
 from .utils import Util
 from datetime import date
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -329,14 +329,6 @@ class TeacherCardSerializer(serializers.ModelSerializer):
         model = TeacherProfile
         fields = ['id', 'user_first_name', 'user_last_name', 'user_email', 'subject', 'experience', 'qualifications']
 
-class ProfilePictureSerializer(serializers.ModelSerializer):
-    user_first_name = serializers.CharField(source='custom_user.first_name')
-    user_last_name = serializers.CharField(source='custom_user.last_name')
-
-    class Meta:
-        model = ProfilePicture
-        fields = ['id', 'user_first_name', 'user_last_name', 'image']
-
 
 
 
@@ -398,3 +390,13 @@ class StudentDetailSerializer(serializers.ModelSerializer):
         model = StudentProfile
         fields = ['id', 'user', 'enrolled_date', 'grade', 'parent_contact', 'enrollment_status']
         depth = 1  # This will include nested user details
+
+
+
+
+
+
+class LectureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lecture
+        fields = ['id', 'title', 'start_time', 'expiry_time']

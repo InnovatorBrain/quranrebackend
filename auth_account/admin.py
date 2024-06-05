@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from .models import CustomUser, ProfilePicture, StudentProfile, TeacherProfile
+from .models import Lecture
 
 class CustomUserAdmin(BaseUserAdmin):
     list_display = ["id", "email", "first_name", "last_name", "is_admin", "is_student", "is_teacher", ]
@@ -79,3 +80,10 @@ admin.site.register(StudentProfile, StudentProfileAdmin)
 admin.site.register(TeacherProfile, TeacherProfileAdmin)
 
 admin.site.unregister(Group)
+
+
+
+@admin.register(Lecture)
+class LectureAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'start_time', 'expiry_time']
+    search_fields = ['title']

@@ -7,6 +7,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser as User, ProfilePicture, StudentProfile, TeacherProfile
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from datetime import datetime, timedelta
+from .models import Lecture
+from .serializers import LectureSerializer
+
 from .serializers import (
     UserSerializer,
     UserProfileSerializer,
@@ -106,7 +113,7 @@ class UserProfileView(APIView):
 
 class ProfilePictureView(APIView):
     queryset = ProfilePicture.objects.all()
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         user = request.user
@@ -325,3 +332,33 @@ class AutoEnrollStudentView(APIView):
             return Response({"error": "Teacher not found."}, status=status.HTTP_404_NOT_FOUND)
         except StudentProfile.DoesNotExist:
             return Response({"error": "Student profile not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+
+class UploadLectureView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        title = request.data.get('title')
+        start_time = request.data.get('start_time')
+        if not title or not start_time:
+            return Response({'error': 'Title and start time are required.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            start_time = datetime.fromisoformat(start_time)
+        except ValueError:
+            return Response({'error': 'Invalid start time format. Use ISO format (YYYY-MM-DDTHH:MM:SS).'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        expiry_time = start_time + timedelta(hours=1)
+        
+        lecture = Lecture.objects.create(title=title, start_time=start_time, expiry_time=expiry_time)
+        serializer = LectureSerializer(lecture)
+        
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class LectureListView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        lectures = Lecture.objects.all()
+        serializer = LectureSerializer(lectures, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
