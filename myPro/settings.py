@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from pathlib import Path
 from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,6 +43,19 @@ INSTALLED_APPS = [
     "auth_account",
     "course_management",
     "chat",
+    # ok
+    'api',
+    # Third Party
+    'import_export',
+    'crispy_forms',
+    'mathfilters',
+    'django.contrib.humanize',
+    'ckeditor',
+    'ckeditor_uploader',
+    'django_ckeditor_5',
+    'taggit',
+    'rest_framework_simplejwt.token_blacklist',
+
 ]
 
 MIDDLEWARE = [
@@ -176,5 +190,6 @@ STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEYY")
 STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEYY")
 
 
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 

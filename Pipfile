@@ -12,6 +12,15 @@ django-cors-headers = "*"
 django-dotenv = "*"
 pillow = "*"
 django-filter = "*"
+django-ckeditor = "*"
+django-ckeditor5 = "*"
+django-import-export = "*"
+django-crispy-forms = "*"
+django-mathfilters = "*"
+django-taggit = "*"
+django-ckeditor-updated = "*"
+django-ckeditor-5 = "*"
+shortuuid = "*"
 
 [dev-packages]
 
