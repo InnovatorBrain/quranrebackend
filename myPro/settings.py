@@ -17,8 +17,6 @@ from datetime import timedelta
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-
-
 SECRET_KEY = "6!@2wu61+2k9cn4*g2=%^&rpc+mb8uw_xq&@o2!q#nylxbr3u1"
 
 DEBUG = True
@@ -26,9 +24,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-
-
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,18 +41,17 @@ INSTALLED_APPS = [
     "course_management",
     "chat",
     # ok
-    'api',
+    "api",
     # Third Party
-    'import_export',
-    'crispy_forms',
-    'mathfilters',
-    'django.contrib.humanize',
-    'ckeditor',
-    'ckeditor_uploader',
-    'django_ckeditor_5',
-    'taggit',
-    'rest_framework_simplejwt.token_blacklist',
-
+    "import_export",
+    "crispy_forms",
+    "mathfilters",
+    "django.contrib.humanize",
+    "ckeditor",
+    "ckeditor_uploader",
+    "django_ckeditor_5",
+    "taggit",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 MIDDLEWARE = [
@@ -81,8 +77,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:9000",
-    "http://localhost:5173"
-
+    "http://localhost:5173",
 ]
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -116,14 +111,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "myPro.wsgi.application"
 
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -142,7 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -152,7 +144,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 
 STATIC_URL = "/static/"
@@ -168,7 +159,7 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 USE_TZ = True
 # SMTP server settings
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587  
+EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get("EMAIL_USER_IS")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD_ISS")
 # DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_FROM")
@@ -190,6 +181,65 @@ STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEYY")
 STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEYY")
 
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 
+
+
+
+
+
+
+
+
+
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Quran Reasonate",
+    "site_header": "Quran Reasonate",
+    "site_brand": "Quran Reasonate",
+    "site_icon": None,
+    # Add your own branding here
+    "site_logo": None,
+    "welcome_sign": "Welcome to the your_site_name",
+    # Copyright on the footer
+    "copyright": "Quran Reasonate",
+    "user_avatar": None,
+   
+    "topmenu_links": [
+        {"name": "Quran Reasonate", "url": "home", "permissions": ["auth.view_user"]},
+        {"model": "auth.User"},
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+   
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "users.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "admin.LogEntry": "fas fa-file",
+    },
+    # # Icons that are used when one is not manually specified
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-arrow-circle-right",
+   
+    "related_modal_active": False,
+   
+    "custom_js": None,
+    "show_ui_builder": False,
+    
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
+}
+
+
+JAZZMIN_UI_TWEAKS = {
+    # "theme": "flatly",
+    "theme": "simplex",
+    # "dark_mode_theme": "darkly",
+}

@@ -21,6 +21,7 @@ django-taggit = "*"
 django-ckeditor-updated = "*"
 django-ckeditor-5 = "*"
 shortuuid = "*"
+django-jazzmin = "*"
 
 [dev-packages]
 
