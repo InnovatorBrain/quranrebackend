@@ -26,7 +26,8 @@ admin.site.site_header = "Quran reasonate Admin"
 admin.site.index_title = "Quran reasonate Site Administration"
 
 urlpatterns = [
-    path("", admin.site.urls),
+    # path("", admin.site.urls),
+    path("admin/", admin.site.urls),
     path("__debug__/", include("debug_toolbar.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("auth/", include("auth_account.urls")),
